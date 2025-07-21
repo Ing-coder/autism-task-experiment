@@ -7,7 +7,7 @@ body {
     padding: 20px;
 }
 .container {
-    max-width: 600px;
+    max-width: 800px;
     margin: auto;
     background: #fff;
     padding: 20px;
@@ -29,13 +29,144 @@ button {
 button:hover {
     background-color: #45a049;
 }
-input {
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+input, textarea {
     padding: 8px;
     margin: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 80%;
 }
-#feedback {
+textarea {
+    height: 100px;
+}
+.consent-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    white-space: nowrap;
+}
+.consent-container input {
+    margin: 0;
+    padding: 0;
+}
+.consent-container label {
+    margin: 0;
+    padding: 0;
+}
+.context-cue {
+    margin: 10px auto;
+    height: 20px;
+    border: 1px solid #ccc;
+}
+.high volatility {
+    background-color: #87CEEB;
+}
+.low-volatility {
+    background-color: #90EE90;
+}
+.light {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 39px;
+}
+.light.on {
+    background-color: #FFFF00;
+}
+.light.off {
+    background-color: #666;
+}
+#hats {
+    margin-top: 60px; /* Push hats down to approximate switch position in Task 1 */
+    position: relative;
+}
+.hat {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    margin: 10px;
+}
+#feedback, #feedback2, #feedback3, #feedback4, #feedback5 {
     color: #d9534f;
+    font-weight: bold;
+    margin-top: 10px;
 }
-
+canvas {
+    margin: 20px auto;
+    border: 1px solid #ccc;
+}
+#orbitA, #orbitB, #orbitC {
+    display: inline-block;
+    margin: 10px;
+    border: 2px solid #444;
+}
+#orbitA:not(:disabled), #orbitB:not(:disabled), #orbitC:not(:disabled) {
+    border: 2px solid #444;
+}
+#orbitA:disabled, #orbitB:disabled, #orbitC:disabled {
+    border: 2px solid #ccc;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.spring-system {
+    position: relative;
+    width: 75px;
+    height: 559.5px;
+    background: linear-gradient(to bottom, #90EE90 calc(15px + var(--spring-amp)), white calc(15px + var(--spring-amp)), white 559.5px);
+    border-radius: 3px;
+    box-shadow: 0 0 1.25px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5px;
+}
+.spring {
+    width: 2px;
+    background: #555;
+    margin-bottom: 2.5px;
+    margin-left: auto;
+    margin-right: auto;
+    animation-name: spring-oscillate;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    will-change: height;
+    z-index: 1;
+}
+.mass {
+    width: var(--size);
+    height: var(--size);
+    margin-left: auto;
+    margin-right: auto;
+    animation-name: oscillate;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    transform: translateY(0);
+    border-radius: 1px;
+    position: relative;
+    top: calc(15px + var(--spring-amp));
+}
+.mass-blue {
+    background: #00f;
+}
+.mass-red {
+    background: #f00;
+}
+.mass-purple {
+    background: #a0f;
+}
+@keyframes oscillate {
+    from { transform: translateY(calc(-1 * var(--amp))); }
+    to   { transform: translateY(calc(1 * var(--amp))); }
+}
+@keyframes spring-oscillate {
+    from { height: 10px; }
+    to   { height: calc(10px + var(--spring-amp)); }
+}
