@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Prediction Questionnaire</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="introContainer" class="container">
+        <h1>Welcome to the Task Prediction Questionnaire</h1>
+        <p>This study involves five tasks to test decision-making and prediction ability. The tasks may seem a little unclear, but this is by design. Please just do the best you can. For most participants, it will take ~10 minutes.</p>
+        <p><strong>Privacy Notice:</strong> No personally identifiable information is being retained in this study.</p>
+        <h2>Participant Information</h2>
+        <div>
+            <label for="ageGroup">What is your age group?</label><br>
+            <select id="ageGroup" aria-label="Select your age group" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="18-29">18-29</option>
+                <option value="30-39">30-39</option>
+                <option value="40-49">40-49</option>
+                <option value="50-59">50-59</option>
+                <option value="60+">60+</option>
+            </select>
+        </div>
+        <div>
+            <label for="educationLevel">What is your highest achieved level of education?</label><br>
+            <select id="educationLevel" aria-label="Select your highest education level" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="highSchool">High School or equivalent</option>
+                <option value="someCollege">Some College</option>
+                <option value="associate">Associate Degree</option>
+                <option value="bachelor">Bachelor's Degree</option>
+                <option value="master">Master's Degree</option>
+                <option value="doctorate">Doctorate or Professional Degree</option>
+            </select>
+        </div>
+        <div>
+            <label for="autismDiagnosis">Do you have a clinical diagnosis of autism?</label><br>
+            <select id="autismDiagnosis" aria-label="Autism diagnosis status" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+        <div id="autismDetails" style="display: none;">
+            <label for="autismFunction">If yes, has your condition been described as:</label><br>
+            <select id="autismFunction" aria-label="Autism functioning level">
+                <option value="" disabled selected>Select an option</option>
+                <option value="low">Low functioning</option>
+                <option value="high">High functioning</option>
+                <option value="other">Something else</option>
+            </select>
+        </div>
+        <p>Your Participant ID: <span id="participantID" aria-label="Generated Participant ID"></span></p>
+        <div class="consent-container">
+            <input type="checkbox" id="consent" aria-label="Consent to participate">
+            <label for="consent">I consent to participate and allow my anonymized data to be used for research.</label>
+        </div>
+        <button id="startBtn" disabled>Start Tasks</button>
+    </div>
+
+    <div id="taskContainer" class="container" style="display: none;">
+        <div id="task1" style="display: none;">
+            <h2>Task 1: Lights Task</h2>
+            <p>Choose a switch to turn both lights on. One switch is more likely to work, but this can change.</p>
+            <div id="lights">
+                <img id="light1" src="light-off.png" alt="Light 1" aria-label="Light 1">
+                <img id="light2" src="light-on.png" alt="Light 2" aria-label="Light 2">
+            </div>
+            <p>Successes: <span id="lightSuccessCount">0</span></p>
+            <img id="switchA" src="switch-off.png" alt="Switch A" aria-label="Switch A" style="cursor: pointer;">
+            <img id="switchB" src="switch-off.png" alt="Switch B" aria-label="Switch B" style="cursor: pointer;">
+            <div id="feedback" aria-live="polite"></div>
+        </div>
+
+        <div id="task2" style="display: none;">
+            <h2>Task 2: Magician's Hats Task</h2>
+            <p>Choose a hat to find the rabbit. Whether the arrow is helpful in finding the rabbit is for you to decide.</p>
+            <div id="hats">
+                <img id="hatA" src="empty_hat.png" alt="Hat A" aria-label="Hat A" style="cursor: pointer;">
+                <img id="hatB" src="empty_hat.png" alt="Hat B" aria-label="Hat B" style="cursor: pointer;">
+            </div>
+            <p>Rabbits Found: <span id="rabbitSuccessCount">0</span></p>
+            <div id="feedback2" aria-live="polite"></div>
+        </div>
+
+        <div id="task3" style="display: none;">
+            <h2>Task 3: Stock Prediction Task</h2>
+            <p>Watch the stock's movement over a period, then predict its later behavior day by day. Note that the average performance trendline (in red) will disappear after your first prediction.</p>
+            <canvas id="stockChart" width="400" height="200" aria-label="Stock movement chart"></canvas>
+            <button id="stockUp">Up</button>
+            <button id="stockDown">Down</button>
+            <div id="feedback3" aria-live="polite"></div>
+        </div>
+
+        <div id="task4" style="display: none;">
+            <h2>Task 4: Orbital Motion Task</h2>
+            <p>See the current positions and velocities of the three orbiting bodies on the left, then pick which of the three configurations on the right will be assumed next.</p>
+            <canvas id="orbitCanvas" width="400" height="200" aria-label="Orbital motion simulation"></canvas>
+            <canvas id="orbitA" width="100" height="50" aria-label="Orbital Position A" style="cursor: pointer;"></canvas>
+            <canvas id="orbitB" width="100" height="50" aria-label="Orbital Position B" style="cursor: pointer;"></canvas>
+            <canvas id="orbitC" width="100" height="50" aria-label="Orbital Position C" style="cursor: pointer;"></canvas>
+            <div id="feedback4" aria-live="polite"></div>
+        </div>
+
+        <div id="task5" style="display: none;">
+            <h2>Task 5: Spring Damping Task</h2>
+            <div id="task5Intro">
+                <p>For each phase of the task that follows you will first have 5 seconds to observe the behavior of one oscillating (moving up and down) spring system with a blue block and then 5 seconds to observe the behavior of a spring system with a red block.</p>
+                <p>The height the blue block is dropped at, its weight, and the strength of its spring will never change, but all may change for the red block.</p>
+                <p>After looking at both, your task will be to choose between two new spring systems: both systems will show a purple block representing the blue and red blocks' weights added together, and both will be dropped a height equal to the blue block's drop height plus the red block's (for example, if the blue block is dropped from 1 meter and the red is dropped from 2 meters, the purple block will be dropped from 3 meters).</p>
+                <p>Your job will be to pick which of the systems has the same spring as the system with the blue block (hint: it will probably behave most like the blue one).</p>
+                <button id="getStartedBtn">Get Started</button>
+            </div>
+            <div id="springContainer" style="display: none; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <div id="blueSpring" class="spring-system" style="display: none;">
+                    <div class="spring"></div>
+                    <div class="mass mass-blue"></div>
+                </div>
+                <div id="redSpring" class="spring-system" style="display: none;">
+                    <div class="spring"></div>
+                    <div class="mass mass-red"></div>
+                </div>
+                <div id="purpleA" class="spring-system" style="display: none; cursor: pointer;" aria-label="Option A">
+                    <div class="spring"></div>
+                    <div class="mass mass-purple"></div>
+                </div>
+                <div id="purpleB" class="spring-system" style="display: none; cursor: pointer;" aria-label="Option B">
+                    <div class="spring"></div>
+                    <div class="mass mass-purple"></div>
+                </div>
+            </div>
+            <div id="feedback5" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
